@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import Mole from './Mole';
 
 export default function MoleHill ({
   hasMole, hideMole, missed, whacked
@@ -9,21 +9,10 @@ export default function MoleHill ({
     hideMole()
   }
 
-  useEffect(() => {
-    const miss = () => {
-      missed()
-      hideMole()
-    }
-    if (hasMole) {
-      let timer = setTimeout(miss, 3000)
-      return () => clearTimeout(timer)
-    }
-  }, [hasMole, hideMole, missed])
-
   return (
     <div className="col-4" onClick={whack}>
       {hasMole ? (
-        <img className="img-fluid" src="/mole.png" alt="mole" />
+        <Mole hideMole={hideMole} missed={missed}/>
       ) : (
         <img className="img-fluid" src="/molehill.png" alt="molehill" />
       )}
