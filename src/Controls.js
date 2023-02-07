@@ -1,5 +1,15 @@
+import { initialState} from './utils'
+
 export default function Controls ({
-  initialState, setMoles, running, setRunning, whacked, missed, setWhacked, setMissed
+  setMoles,
+  running,
+  setRunning,
+  whacked,
+  missed,
+  setWhacked,
+  setMissed,
+  speed,
+  setSpeed
 }) {
 
   const reset = () => {
@@ -29,6 +39,21 @@ export default function Controls ({
         >
           Reset Game
         </button>
+      </div>
+
+      <div className="col-12 d-flex justify-content-center mt-3">
+        <div className="btn-group">
+          <button
+            className="btn btn-secondary"
+            onClick={() => setSpeed(speed - 1)}
+            disabled={speed <= 1}
+          >-</button>
+          <div className="btn border" disabled>Speed</div>
+          <button
+            className="btn btn-secondary"
+            onClick={() => setSpeed(speed + 1)}
+          >+</button>
+        </div>
       </div>
     </div>
   )

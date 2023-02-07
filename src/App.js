@@ -1,35 +1,30 @@
-import { useState, useEffect } from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
-import Controls from './Controls';
-import MoleHill from './MoleHill';
-import Score from './Score';
-
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
-}
-
-const initialState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+import { useState, useEffect } from 'react'
+import 'bootstrap/dist/css/bootstrap.css'
+import Controls from './Controls'
+import MoleHill from './MoleHill'
+import Score from './Score'
+import { initialState, getRandomInt} from './utils'
 
 function App() {
 
-  const [ running, setRunning ] = useState(false);
+  const [ running, setRunning ] = useState(false)
   const [ moles, setMoles ] = useState(initialState)
-  const [ whacked, setWhacked ] = useState(0);
-  const [ missed, setMissed ] = useState(0);
+  const [ whacked, setWhacked ] = useState(0)
+  const [ missed, setMissed ] = useState(0)
+  const [ speed, setSpeed ] = useState(1)
 
   useEffect(() => {
     // get random number from 0 to 8
     if (moles.toString() === initialState.toString() && running) {
       let num = getRandomInt(0, 9)
-      let time = getRandomInt(0, 5000)
+      let time = getRandomInt(1, (5000 / speed))
       setTimeout(() => {
         let newHills = [...moles]
         newHills[num] = 1
         setMoles(newHills)
       }, time)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [moles, running])
 
   const hideMole = (idx) => {
@@ -43,7 +38,6 @@ function App() {
       <h1 className="mb-4 text-center">React-A-Mole</h1>
       <Score whacked={whacked} missed={missed} />
       <Controls
-        initialState={initialState}
         setMoles={setMoles}
         running={running}
         setRunning={setRunning}
@@ -51,6 +45,8 @@ function App() {
         missed={missed}
         setWhacked={setWhacked}
         setMissed={setMissed}
+        speed={speed}
+        setSpeed={setSpeed}
       />
       <div className={`row mt-4${running ? '' : ' opacity-50'}`}>
         {moles.map((bool, idx) => (
@@ -60,6 +56,7 @@ function App() {
             hideMole={() => hideMole(idx)}
             whacked={() => setWhacked(whacked + 1)}
             missed={() => setMissed(missed + 1)}
+            speed={speed}
           />
         ))}
       </div>
