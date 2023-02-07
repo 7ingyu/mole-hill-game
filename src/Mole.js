@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { getRandomInt} from './utils'
 
 export default function Mole ({ hideMole, missed, speed }) {
 
@@ -7,7 +8,8 @@ export default function Mole ({ hideMole, missed, speed }) {
       missed()
       hideMole()
     }
-      let timer = setTimeout(miss, (3000 / speed))
+      let time = getRandomInt(3000 - (100 * speed), 3000 / speed)
+      let timer = setTimeout(miss, time)
       return () => clearTimeout(timer)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

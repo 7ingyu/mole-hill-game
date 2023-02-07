@@ -52,6 +52,7 @@ export default function Controls ({
           <button
             className="btn btn-secondary"
             onClick={() => setSpeed(speed + 1)}
+            disabled={speed >= 30}
           >+</button>
         </div>
       </div>
